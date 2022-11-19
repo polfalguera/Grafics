@@ -6,16 +6,14 @@ layout(triangle_strip, max_vertices = 36) out;
 in vec4 vfrontColor[];
 out vec4 gfrontColor;
 
-uniform mat4 modelViewProjectionMatrix;
+in vec2 vtexCoord[];
+out vec2 gtexCoord;
 
-uniform mat3 normalMatrix;
+uniform mat4 modelViewProjectionMatrix;
 
 uniform float step = 0.2;
 
-float color(vec3 u, vec3 v, vec3 w) {
-    vec3 normal = cross(v-u,w-u);
-    return normalize(normalMatrix*normal).z;
-}
+out float caraSuperior;
 
 vec4 calcularBaricentre() {
 	vec4 V1 = gl_in[0].gl_Position;
@@ -26,14 +24,38 @@ vec4 calcularBaricentre() {
 }
 
 void pintarCaraCub(vec4 V1, vec4 V2, vec4 V3, vec4 V4) {
-	gfrontColor = vec4(0.8,0.8,0.8,1.0) *  color(V1.xyz,V2.xyz,V4.xyz);
+	caraSuperior = 0;
+	
+	gfrontColor = vfrontColor[0];
 
+	
 	gl_Position = modelViewProjectionMatrix*V1; 
 	EmitVertex();
     gl_Position = modelViewProjectionMatrix*V2; 
 	EmitVertex();
     gl_Position = modelViewProjectionMatrix*V3; 
 	EmitVertex();
+    gl_Position = modelViewProjectionMatrix*V4; 
+	EmitVertex();
+    
+	EndPrimitive();
+}
+
+void pintarCaraSuperior(vec4 V1, vec4 V2, vec4 V3, vec4 V4) {
+	caraSuperior = 1;
+	
+	gfrontColor = vfrontColor[0];
+
+	gtexCoord = vec2(0,0);
+	gl_Position = modelViewProjectionMatrix*V1; 
+	EmitVertex();
+	gtexCoord = vec2(1,0);
+    gl_Position = modelViewProjectionMatrix*V2; 
+	EmitVertex();
+	gtexCoord = vec2(0,1);
+    gl_Position = modelViewProjectionMatrix*V3; 
+	EmitVertex();
+	gtexCoord = vec2(1,1);
     gl_Position = modelViewProjectionMatrix*V4; 
 	EmitVertex();
     
@@ -55,13 +77,11 @@ void main( void )
 	//Cara dorsal
 	pintarCaraCub(calcularV(C,R,R,-R),calcularV(C,R,-R,-R),calcularV(C,-R,R,-R),calcularV(C,-R,-R,-R));
 	//Cara superior
-	pintarCaraCub(calcularV(C,-R,R,R),calcularV(C,R,R,R),calcularV(C,-R,R,-R),calcularV(C,R,R,-R));
+	pintarCaraSuperior(calcularV(C,-R,R,R),calcularV(C,R,R,R),calcularV(C,-R,R,-R),calcularV(C,R,R,-R));
 	//Cara inferior
 	pintarCaraCub(calcularV(C,R,-R,-R),calcularV(C,-R,-R,-R),calcularV(C,R,-R,R),calcularV(C,-R,-R,R));
 	//Cara lateral dret
 	pintarCaraCub(calcularV(C,R,R,R),calcularV(C,R,-R,R),calcularV(C,R,R,-R),calcularV(C,R,-R,-R));
 	//Cara lateral esquerre
-	pintarCaraCub(calcularV(C,-R,-R,-R),calcularV(C,-R,R,-R),calcularV(C,-R,-R,R),calcularV(C,-R,R,R));
-
-		
+	pintarCaraCub(calcularV(C,-R,-R,-R),calcularV(C,-R,R,-R),calcularV(C,-R,-R,R),calcularV(C,-R,R,R));		
 }
