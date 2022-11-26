@@ -12,13 +12,15 @@ uniform float edge1 = 0.4;
 const vec4 WHITE = vec4(1.0);
 const vec4 BLACK = vec4(vec3(0.0),1.0);
 
+uniform mat3 normalMatrix;
+
 void main()
 {
     vec3 V = -P;
     V = normalize(V);
-    vec3 Nnorm = normalize(N);
+    vec3 Nnorm = normalize(normalMatrix * N);
 
-    float c = dot(N,V);
+    float c = dot(Nnorm,V);
 
     /*if (c < edge0) fragColor = BLACK;
     else if (c > edge1) fragColor = WHITE;

@@ -9,7 +9,6 @@ out vec4 frontColor;
 out vec2 vtexCoord;
 
 uniform mat4 modelViewProjectionMatrix;
-uniform mat3 normalMatrix;
 uniform mat4 modelViewMatrix;
 
 out vec3 N;
@@ -17,7 +16,7 @@ out vec3 P;
 
 void main()
 {
-    N = normalMatrix * normal;
+    N = normal;
     P = (modelViewMatrix * vec4(vertex,1.0)).xyz;
     gl_Position = modelViewProjectionMatrix * vec4(vertex, 1.0);
 }
