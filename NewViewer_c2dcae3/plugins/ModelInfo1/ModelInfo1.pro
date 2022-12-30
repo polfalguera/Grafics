@@ -1,2 +1,2 @@
-TARGET     = $$qtLibraryTarget(ModelInfo113)
+TARGET     = $$qtLibraryTarget(ModelInfo11)
 include(../common.pro)

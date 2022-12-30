@@ -1,7 +1,7 @@
 #include "ModelInfo1.h"
 #include "glwidget.h"
 
-// ps - Número de polígons
+  // ps - Número de polígons
 // vs - Número de vèrtexs
 // pr - Percentatge de polígons que són triangle
 void ModelInfo1::calculs(int& ps, int& vs, double& pr) {
