@@ -19,7 +19,7 @@
 #include "glowing.h"
 #include <QCoreApplication>
 
-const int IMAGE_WIDTH = 1024;
+const int IMAGE_WIDTH = 512;
 const int IMAGE_HEIGHT = IMAGE_WIDTH;
 
 void Glowing::onPluginLoad()

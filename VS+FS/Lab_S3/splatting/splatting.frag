@@ -3,13 +3,13 @@
 in vec4 frontColor;
 out vec4 fragColor;
 
-in vec2 vtexCoord;
-
 //uniform sampler2D myMap;
 
 uniform sampler2D noise0;
 uniform sampler2D rock1;
 uniform sampler2D grass2;
+
+in vec2 vtexCoord;
 
 void main()
 {

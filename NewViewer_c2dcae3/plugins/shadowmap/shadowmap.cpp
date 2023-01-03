@@ -1,21 +1,3 @@
-// GLarena, a plugin based platform to teach OpenGL programming
-// © Copyright 2012-2018, ViRVIG Research Group, UPC, https://www.virvig.eu
-// 
-// This file is part of GLarena
-//
-// GLarena is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-// 
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-// 
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
 #include "shadowmap.h"
 #include <QCoreApplication>
 
@@ -32,11 +14,11 @@ void ShadowMap::onPluginLoad()
 
     // Carregar shader, compile & link 
     vs = new QOpenGLShader(QOpenGLShader::Vertex, this);
-    vs->compileSourceFile(glwidget()->getPluginPath()+"/../shadowmap/shadowmap.vert");
+    vs->compileSourceFile(QCoreApplication::applicationDirPath()+"/../../plugins/shadowmap/shadowmap.vert");
     //cout << "vs" << endl;
 
     fs = new QOpenGLShader(QOpenGLShader::Fragment, this);
-    fs->compileSourceFile(glwidget()->getPluginPath()+"/../shadowmap/shadowmap.frag");
+    fs->compileSourceFile(QCoreApplication::applicationDirPath()+"/../../plugins/shadowmap/shadowmap.frag");
     //cout << "fs" << endl;
 
     program = new QOpenGLShaderProgram(this);
@@ -163,8 +145,8 @@ bool ShadowMap::paintGL()
 
     Point min = scene()->boundingBox().min();
     float r = scene()->boundingBox().radius();
-    drawQuad(Point(-r,min.y(), r), Point( r,min.y(), r),
-	     Point( r,min.y(),  -r), Point(-r,min.y(), -r));
+    drawQuad(Point(-r,min.y(), -r), Point( r,min.y(), -r),
+	     Point( r,min.y(),  r), Point(-r,min.y(),  r));
 
     g.defaultProgram()->bind();
     glBindTexture(GL_TEXTURE_2D, 0);

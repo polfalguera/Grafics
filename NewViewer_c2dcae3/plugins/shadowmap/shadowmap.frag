@@ -23,6 +23,7 @@ void main()
 	float storedDepth = texture(shadowMap, st).r;
 	float trueDepth = vtexCoord.p / vtexCoord.q;
 
+    //float bias = 0.01;
 	if (trueDepth <= storedDepth)
 		fragColor = color;
 	else
